@@ -1,0 +1,218 @@
+<br>
+<div id="container" onmousemove="hoverTrigger()" onmouseleave="mouseLeaveContainer()" onclick="event.stopPropagation()">
+    <video id="video" onclick="clickVideo()" width="100%" height="100%"
+           src="https://mediastore.auckland.ac.nz/2016/1163/PHYSICS107L01C/366694/201605201000.LT347631.REV1.mp4"></video>
+    <div id="controls">
+        <div id="title"></div>
+        <div id="gradient" onclick="clickVideo()">
+            <div id="bottomHoverZone" onmouseover="hoverOver(this.id)" onmouseleave="hoverLeave(this.id)"></div>
+        </div>
+        <div id="preview">
+            <video muted id="thumbnail" width="320" height="180" src="" style="visibility: hidden;"></video>
+            <div id="thumbnail-position">
+                <div id="thumbnail-text"></div>
+            </div>
+        </div>
+        <div id="options-menu-container">
+            <div id="options-menu-bg"></div>
+            <table id="options-menu">
+                <tbody id="top-level">
+                <tr onclick="toggleThumbnails()" class="clickable">
+                    <td colspan="2">
+                        Thumbnails <sup>BETA</sup>
+                        <div id="thumbnails-slider-bg">
+                            <div id="thumbnails-slider-knob"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr onclick="document.querySelector('#video-speed').focus()">
+                    <td>Speed</td>
+                    <td>
+                        <input type="number" id="video-speed" onchange="setSpeed(this.value)" min="0.5" max="3"
+                               step="0.1" value="1">
+                    </td>
+                </tr>
+                <tr onclick="showQualityMenu()" class="clickable">
+                    <td>Quality</td>
+                    <td>
+                        <span id="selected-quality"></span>&nbsp&nbsp<i class="fa fa-angle-right"
+                                                                        aria-hidden="true"></i>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody id="quality-select">
+                <tr onclick="hideQualityMenu()" class="clickable">
+                    <td colspan="2" style="text-align:right;"><i class="fa fa-angle-left" aria-hidden="true"></i>&nbsp&nbsp
+                        Quality
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <hr>
+                    </td>
+                </tr>
+                <tr onclick="setQuality('full');hideQualityMenu()" id="quality-full" class="clickable">
+                    <td><i class="fa fa-check" aria-hidden="true"></i></td>
+                    <td>Full Frame</td>
+                </tr>
+                <tr onclick="setQuality('high');hideQualityMenu()" id="quality-high" class="clickable">
+                    <td><i class="fa fa-check" aria-hidden="true"></i></td>
+                    <td>High</td>
+                </tr>
+                <tr onclick="setQuality('low');hideQualityMenu()" id="quality-low" class="clickable">
+                    <td><i class="fa fa-check" aria-hidden="true"></i></td>
+                    <td>Low</td>
+                </tr>
+                <tr onclick="setQuality('audio');hideQualityMenu()" id="quality-audio" class="clickable">
+                    <td><i class="fa fa-check" aria-hidden="true"></i></td>
+                    <td>Audio Only</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="seek-bar" class="clickable"
+             onmouseover="hoverOver(this.id)"
+             onmousemove="hoverSeekBar(event,this);"
+             onmouseleave="stopHoverSeekBar();hoverLeave(this.id)"
+             onmousedown="seekVideo(event,this)"
+             onclick="hideOptionsMenu();hideHotkeysReference()">
+            <div id="progress-background" class="progress-bar"></div>
+            <div id="hover-progress" class="progress-bar"></div>
+            <div id="load-progress" class="progress-bar"></div>
+            <div id="seek-progress" class="progress-bar"></div>
+            <div id="seek-handle" class="progress-bar"></div>
+        </div>
+        <table id="options-bar"
+               onclick="hideOptionsMenu();hideHotkeysReference()"
+               onmouseover="hoverOver(this.id)"
+               onmouseleave="hoverLeave(this.id)">
+            <tr>
+                <td id="play-button" class="control-button clickable" onclick="playPause();event.stopPropagation()">
+                    <i class="fa fa-play"></i>
+                </td>
+                <td id="volume-button" class="control-button clickable" onclick="toggleMute();event.stopPropagation()">
+                    <!-- class="fa fa-volume-up"></i-->
+                    <div id="volume-button-icon" class="high">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
+                </td>
+                <td id="volume-slider-container">
+                    <input type="range" id="volume-slider" class="clickable" min="0" max="1" value="1" step="0.01"
+                           onclick="event.stopPropagation()"
+                           oninput="setVolume(this.value)" onchange="if(this.value!=0){lastInputVolume=this.value}">
+                </td>
+                <td>
+                    <div id="time-display"></div>
+                </td>
+                <td style="width:99%">
+                    <!-- padding -->
+                </td>
+                <td id="hotkeys-reference-button" class="control-button clickable"
+                    onclick="toggleHotkeysReference();hideOptionsMenu();event.stopPropagation()">
+                    <i class="fa fa-keyboard-o"></i>
+                </td>
+                <td id="options-button" class="control-button clickable"
+                    onclick="toggleOptionsMenu();hideHotkeysReference();event.stopPropagation()">
+                    <i class="fa fa-cog"></i>
+                </td>
+                <td id="fullscreen-button" class="control-button clickable"
+                    onclick="toggleFullScreen(document.querySelector('#container'));updateSeekDisplay();event.stopPropagation()">
+                    <i class="fa fa-expand"></i>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="hotkey-popup-container">
+        <div id="hotkey-popup-outer">
+            <div id="hotkey-popup-middle">
+                <div id="hotkey-popup" class="inactive">
+                    <div id="hotkey-popup-faster" class="hotkey-popup-icon">
+                        <i class="fa fa-forward"></i>
+                    </div>
+                    <div id="hotkey-popup-slower" class="hotkey-popup-icon">
+                        <i class="fa fa-backward"></i>
+                    </div>
+                    <div id="hotkey-popup-skip-forward" class="hotkey-popup-icon">
+                        <i class="fa fa-step-forward"></i>
+                    </div>
+                    <div id="hotkey-popup-skip-backward" class="hotkey-popup-icon">
+                        <i class="fa fa-step-backward"></i>
+                    </div>
+                    <div id="hotkey-popup-pause" class="hotkey-popup-icon">
+                        <i class="fa fa-pause"></i>
+                    </div>
+                    <div id="hotkey-popup-play" class="hotkey-popup-icon">
+                        <i class="fa fa-play"></i>
+                    </div>
+                    <br>
+                    <div id="hotkey-popup-text"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="hotkeys-reference-container" style="display:none">
+        <div id="hotkeys-reference-middle">
+            <div id="hotkeys-reference">
+                <div id="close-hotkeys" onclick="hideHotkeysReference()">
+                    <i class="fa fa-times"></i>
+                </div>
+                <table>
+                    <tr>
+                        <td>
+                            <div class="keyboard-key space-key">
+                                Space
+                            </div>
+                        </td>
+                        <td>Play/Pause</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="keyboard-key">
+                                F
+                            </div>
+                        </td>
+                        <td>Toggle Fullscreen</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="keyboard-key">
+                                ,
+                            </div>
+                        </td>
+                        <td>Decrease Speed</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="keyboard-key">
+                                .
+                            </div>
+                        </td>
+                        <td>Increase Speed</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="keyboard-key">
+                                ←
+                            </div>
+                        </td>
+                        <td>Skip Backward 10 Seconds</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="keyboard-key">
+                                →
+                            </div>
+                        </td>
+                        <td>Skip Forward 10 Seconds</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="audio-only-hint-container">
+        <div id="audio-only-hint-middle">
+            <div id="audio-only-hint">
+                <div id="audio-only-title">Audio Only</div>
+                Click <i class="fa fa-cog"></i> to change
+            </div>
+        </div>
+    </div>
+</div>
