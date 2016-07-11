@@ -648,3 +648,31 @@ input:focus {
 /* TODO this is too inconsistent. Change to 'cursor:pointer' when fixed */
 #container .clickable * {
 }
+
+/* Compatibility fixes for Cecil Lecture Downloader */
+#volume-slider,
+#video-speed {
+    margin-bottom: 0;
+}
+
+#options-bar tr,
+#options-menu tr {
+    border-bottom: none;
+}
+
+#options-menu {
+    margin-bottom: 0;
+}
+
+#preview div {
+    text-align: center;
+}
+
+#hotkeys-reference table {
+    margin-bottom: 0;
+}
+
+#options-menu hr {
+    margin-top: 6.5px;
+    margin-bottom: 6.5px;
+}
