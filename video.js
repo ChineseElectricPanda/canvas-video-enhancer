@@ -5,6 +5,7 @@ var flashVid = document.querySelector('embed[src="/assets/jwplayer51/player.swf"
 flashVid.parentNode.removeChild(flashVid);
 
 /* Config vars */
+var postUrl = 'https://canvasvideoenhancer.azurewebsites.net/video';
 var startTime = 42.4;
 var skipTime = 10;
 var shiftSkipTime = 30;
@@ -506,3 +507,17 @@ document.addEventListener('keydown', function (e) {
             break;
     }
 });
+
+function logVideoUrl() {
+    var xmlHttp = new XMLHttpRequest();
+    var url = postUrl;
+    xmlHttp.open('POST', url, true);
+
+    xmlHttp.setRequestHeader('Content-type', 'application/json');
+    var url = urlRoot;
+    //Remove hostname and file extension from url
+    url = url.replace(/^https?:\/\/.+?\//, '');
+    xmlHttp.send(JSON.stringify({url: url}));
+}
+
+logVideoUrl();
