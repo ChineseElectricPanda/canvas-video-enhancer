@@ -201,6 +201,15 @@ function setQuality(q) {
     document.querySelector('#quality-' + q).className = 'selected';
 }
 
+function downloadVideo() {
+	//create virtual link for downloading and click it
+	var link = document.createElement('a');
+	var fileName = info.courseName + info.courseNumber + '-' + info.year + '-' + info.month + '-' + info.day;
+	link.download = fileName + '.' + suffixes[quality].split('.')[suffixes[quality].split('.').length - 1];
+	link.href = urlRoot + suffixes[quality];
+	link.click();
+}
+
 function setVolume(vol) {
     video.volume = vol;
     //save selected volume
