@@ -1,5 +1,11 @@
 //Inject video element
 document.addEventListener('DOMContentLoaded', function () {
+    // Remove existing scripts on the page
+    var elementsToRemove = document.querySelectorAll('body>div.container, body>script, head>*');
+    for(var i = 0; i < elementsToRemove.length; i++){
+        elementsToRemove[i].parentNode.removeChild(elementsToRemove[i]);
+    }
+
     //Inject the JS
     //http://stackoverflow.com/questions/9515704/building-a-chrome-extension-inject-code-in-a-page-using-a-content-script
     var script = document.createElement('script');
