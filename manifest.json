@@ -3,8 +3,10 @@
 
   "name": "Canvas Video Enhancer",
   "description": "Improves the University of Auckland lecture recording playback interface.",
-  "version": "0.1.1.0",
+  "version": "0.1.1.2",
   "permissions": [
+	"webRequest",
+	"webRequestBlocking",
 	"*://mediastore.auckland.ac.nz/*"
   ],
   "content_scripts":[{
@@ -14,5 +16,8 @@
 	"css":["video.css","font-awesome.min.css"],
 	"all_frames":true
   }],
+  "background": {
+	"scripts": ["background.js"]
+  },
   "web_accessible_resources":["video.html","video.js","fonts/*","img/*"]
 }

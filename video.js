@@ -1,9 +1,5 @@
 console.log('INJECT Video Enhancer');
 
-//Remove the flash version of the video from the page
-var flashVid = document.querySelector('embed[src="/assets/jwplayer51/player.swf"]');
-flashVid.parentNode.removeChild(flashVid);
-
 /* Config vars */
 var postUrl = 'https://canvasvideoenhancer.azurewebsites.net/video';
 var startTime = 42.4;
