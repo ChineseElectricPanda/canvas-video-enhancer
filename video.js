@@ -501,6 +501,12 @@ document.addEventListener('keydown', function (e) {
             setSpeed(videoSpeed.value);
             showHotkeyPopup('faster', videoSpeed.value + 'x');
             break;
+
+        // / resets videoSpeed
+        case 191:
+            setSpeed(1);
+            showHotkeyPopup('play', videoSpeed.value + 'x');
+            break;
     }
 });
 
