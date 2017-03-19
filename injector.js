@@ -6,15 +6,19 @@ document.addEventListener('DOMContentLoaded', function () {
         elementsToRemove[i].parentNode.removeChild(elementsToRemove[i]);
     }
 
+    var scriptsToInject = ['video.js'];
+
     //Inject the JS
     //http://stackoverflow.com/questions/9515704/building-a-chrome-extension-inject-code-in-a-page-using-a-content-script
-    var script = document.createElement('script');
-    script.src = chrome.extension.getURL('video.js');
-    script.onload = function () {
-        this.remove();
-    };
-    (document.head || document.documentElement).appendChild(script);
-
+    for(var i = 0; i < scriptsToInject.length; i++){
+        var script = document.createElement('script');
+        script.src = chrome.extension.getURL(scriptsToInject[i]);
+        script.onload = function () {
+            this.remove();
+        };
+        (document.head || document.documentElement).appendChild(script);
+    }
+    
     //Inject the HTML
     //http://stackoverflow.com/questions/16334054/inject-html-into-a-page-from-a-content-script
     var xmlHttp = new XMLHttpRequest();
