@@ -133,6 +133,7 @@ body {
 }
 
 .bookmark-item>:first-child,
+.bookmark-item>:nth-last-child(2),
 .bookmark-item>:last-child {
     width: 1%;
 }
