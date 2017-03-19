@@ -227,6 +227,17 @@ div, td, table {
     background-color: rgba(200, 200, 200, 0.4);
 }
 
+#bookmarks-markers-container {
+    width: 100%;
+}
+
+#bookmarks-markers-container > div {
+    position: absolute;
+    height: 100%;
+    background-color: #FFFFFF;
+    width: 1px;
+}
+
 #options-menu-container {
     position: absolute;
     right: 0;
@@ -558,6 +569,10 @@ input:focus {
 
 #hotkey-popup-play {
     padding: 30% 0 0 9%;
+}
+
+#hotkey-popup-bookmark {
+    padding:30%;
 }
 
 /* Hotkeys reference dialog */

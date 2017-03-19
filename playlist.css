@@ -1,0 +1,138 @@
+body {
+    font-family: sans-serif;
+    background-color: #F1F1F1;
+}
+
+#nav-bar {
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    vertical-align: middle;
+    background-color: white;
+    border-collapse:collapse;
+    border-bottom: 1px solid #E8E8E8;
+    z-index:100
+}
+
+#nav-bar td:last-child{
+    width:99%;
+}
+
+#logo {
+    height: 60px;
+    width:60px;
+    cursor:pointer;
+}
+
+#logo-title {
+    font-size: 20px;
+    cursor:pointer;
+}
+
+
+#outer-container {
+    margin: auto;
+    border-collapse: collapse;
+    background-color:black;
+}
+
+
+#sidebar-container {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 405px;
+    background-color: #222;
+}
+
+#playlist-heading,
+#bookmarks-heading {
+    background-color: #1a1a1a;
+}
+
+#playlist-heading,
+#playlist-heading table,
+#bookmarks-heading,
+#bookmarks-heading table {
+    width: 100%;
+}
+
+#playlist-heading td,
+#bookmarks-heading td{
+    color: white;
+    padding: 10px;
+}
+
+#playlist-progress{
+    vertical-align: middle;
+    text-align: right;
+}
+
+#course-name,
+#bookmarks-title{
+    font-size:16px;
+}
+
+#semester,
+#bookmarks-subtitle{
+    margin-top:5px;
+    color:#b8b8b8;
+    font-size:12px;
+
+}
+
+#playlist-list,
+#bookmarks-table-container {
+    flex-grow: 1;
+    background-color: #222;
+    overflow:auto;
+    border: none;
+    width: 100%;
+}
+
+#bookmarks-table {
+    width: 100%;
+}
+
+::-webkit-scrollbar{
+    width:12px;
+}
+
+::-webkit-scrollbar-track {
+    background:#3a3a3a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+.playlist-item,
+.bookmark-item td {
+    color: white;
+    padding:5px 10px;
+}
+
+.playlist-item.selected,
+.playlist-item.selected:hover{
+    background-color:#444;
+}
+
+.playlist-item:hover,
+.bookmark-item:hover {
+    background-color:#333;
+    cursor:pointer;
+}
+
+.bookmark-item *[contenteditable=true] {
+    cursor: auto;
+}
+
+.bookmark-item>:last-child {
+    text-align: right;
+}
+
+.bookmark-item>:first-child,
+.bookmark-item>:last-child {
+    width: 1%;
+}
