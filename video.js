@@ -489,10 +489,13 @@ function parseUrl(url) {
     }
 
     try {
-        url[4] = url[4].replace(/[A-z]/, '');
-        info.year = url[4].slice(0, 4);
-        info.month = url[4].slice(4, 6);
-        info.day = url[4].slice(6, 8);
+        var dateTimeString = url[url.length - 1].match(/\d+/)[0];
+
+        info.year = dateTimeString.slice(0, 4);
+        info.month = dateTimeString.slice(4, 6);
+        info.day = dateTimeString.slice(6, 8);
+        info.hour = dateTimeString.slice(8, 10);
+        info.minute = dateTimeString.slice(10, 12);
     } catch (e) {
         info.year = '';
         info.month = '';
