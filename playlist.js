@@ -27,7 +27,9 @@ function init() {
             data.push({
                 video_id: 1,
                 url: window.location.pathname.replace(/\.preview$/, ''),
-                ...info
+                year: info.year,
+                month: info.month,
+                day: info.day
             });
         }
 

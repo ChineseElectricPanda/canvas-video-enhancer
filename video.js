@@ -658,7 +658,6 @@ function logVideoUrl() {
 logVideoUrl();
 
 video.addEventListener('loadedmetadata', function () {
-    console.log('hi');
     loadBookmarks();
     updateBookmarkDisplays();
 });
