@@ -234,29 +234,59 @@ function updateBookmarkDisplays() {
 
     // Add entries to bookmarks table
     var bookmarksTable = document.querySelector('#bookmarks-table');
-    var html = '';
+    // Clear table
+    while (bookmarksTable.firstChild) {
+        bookmarksTable.removeChild(bookmarksTable.firstChild);
+    }
     for (var i = 0; i < bookmarks.length; i++) {
         var bookmark = bookmarks[i];
-        html +=
-            '<tr class="bookmark-item" onclick="video.currentTime=' + bookmark.time + '"> \
-            <td onclick="enableRenameBookmark(' + i + ', true); event.stopPropagation()"><i class="fa fa-pencil"></i></td> \
-            <td oninput="renameBookmark(' + i + ', this.innerText)" onblur="enableRenameBookmark(' + i + ', false)" onclick="if(this.contentEditable === \'true\') { event.stopPropagation(); }">' + bookmark.label + '</td> \
-            <td>' + toTimeString(bookmark.time) + '</td> \
-            <td onclick="deleteBookmark(' + i + '); event.stopPropagation()"><i class="fa fa-times"></i></td> \
-        </tr>';
+        var row = document.createElement('tr');
+        row.className = 'bookmark-item';
+        row.setAttribute('onclick', 'video.currentTime=' + bookmark.time);
+
+        var renameButton = document.createElement('td');
+        renameButton.setAttribute('onclick', 'enableRenameBookmark(' + i + ', true); event.stopPropagation()');
+        var renameButtonIcon = document.createElement('i');
+        renameButtonIcon.className = 'fa fa-pencil';
+        renameButton.appendChild(renameButtonIcon);
+        row.appendChild(renameButton);
+
+        var renameField = document.createElement('td');
+        renameField.setAttribute('onclick', 'if(this.contentEditable === \'true\') { event.stopPropagation(); }');
+        renameField.setAttribute('onblur', 'enableRenameBookmark(' + i + ', false)');
+        renameField.setAttribute('oninput', 'renameBookmark(' + i + ', this.innerText)');
+        renameField.innerText = bookmark.label;
+        row.appendChild(renameField);
+
+        var timeField = document.createElement('td');
+        timeField.innerText = toTimeString(bookmark.time);
+        row.appendChild(timeField);
+
+        var deleteButton = document.createElement('td');
+        deleteButton.setAttribute('onclick', 'deleteBookmark(' + i + '); event.stopPropagation()');
+        var deleteButtonIcon = document.createElement('i');
+        deleteButtonIcon.className = 'fa fa-times';
+        deleteButton.appendChild(deleteButtonIcon);
+        row.appendChild(deleteButton);
+
+        bookmarksTable.appendChild(row);
     }
-    bookmarksTable.innerHTML = html;
 
     // Add markers to seek bar
     var bookmarksMarkersContainer = document.querySelector('#bookmarks-markers-container');
-    html = '';
+    // Remove existing markers
+    while (bookmarksMarkersContainer.firstChild) {
+        bookmarksMarkersContainer.removeChild(bookmarksMarkersContainer.firstChild);
+    }
     for (var i = 0; i < bookmarks.length; i++) {
         var bookmark = bookmarks[i];
         // Calculate screen position of bookmark time
         var x = bookmark.time / video.duration * 100;
-        html += '<div style="left: ' + x + '%;"></div>';
+        var bookmarkMarker = document.createElement('div');
+        bookmarkMarker.style.left = x + '%';
+        console.log(bookmarkMarker);
+        bookmarksMarkersContainer.appendChild(bookmarkMarker);
     }
-    bookmarksMarkersContainer.innerHTML = html;
 }
 
 function createBookmark() {
