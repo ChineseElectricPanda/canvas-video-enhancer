@@ -2,7 +2,7 @@ console.log('INJECT Video Enhancer');
 
 /* Config vars */
 var postUrl = 'https://canvasvideoenhancer.azurewebsites.net/video';
-var startTime = 42.4;
+var startTime = 42.65;
 var skipTime = 10;
 var shiftSkipTime = 30;
 
@@ -212,11 +212,6 @@ function sortBookmarks() {
 }
 
 function loadBookmarks() {
-    // Only load bookmarks if it hasn't been loaded yet
-    if(bookmarks != undefined) {
-        return;
-    }
-
     bookmarks = localStorage.getItem('canvasVideoEnhancerBookmark-' + urlRoot.replace(/^https?:\/\/.+?\//, ''));
     try {
         bookmarks = JSON.parse(bookmarks);
@@ -225,7 +220,7 @@ function loadBookmarks() {
     }
 
     // If bookmarks was not parsed or doesn't exist or is not an array, create a new array to hold bookmarks
-    if(!bookmarks || bookmarks.constructor !== Array) {
+    if (!bookmarks || bookmarks.constructor !== Array) {
         bookmarks = [];
     }
 }
@@ -240,12 +235,12 @@ function updateBookmarkDisplays() {
     // Add entries to bookmarks table
     var bookmarksTable = document.querySelector('#bookmarks-table');
     var html = '';
-    for(var i = 0; i < bookmarks.length; i++) {
+    for (var i = 0; i < bookmarks.length; i++) {
         var bookmark = bookmarks[i];
         html +=
-        '<tr class="bookmark-item" onclick="video.currentTime=' + bookmark.time + '"> \
+            '<tr class="bookmark-item" onclick="video.currentTime=' + bookmark.time + '"> \
             <td onclick="enableRenameBookmark(' + i + ', true); event.stopPropagation()"><i class="fa fa-pencil"></i></td> \
-            <td oninput="renameBookmark(' + i + ', this.innerText)" onblur="enableRenameBookmark(' + i + ', false)" onclick="if(this.contentEditable === \'true\') { event.stopPropagation(); }">' + bookmark.label +'</td> \
+            <td oninput="renameBookmark(' + i + ', this.innerText)" onblur="enableRenameBookmark(' + i + ', false)" onclick="if(this.contentEditable === \'true\') { event.stopPropagation(); }">' + bookmark.label + '</td> \
             <td>' + toTimeString(bookmark.time) + '</td> \
             <td onclick="deleteBookmark(' + i + '); event.stopPropagation()"><i class="fa fa-times"></i></td> \
         </tr>';
@@ -255,7 +250,7 @@ function updateBookmarkDisplays() {
     // Add markers to seek bar
     var bookmarksMarkersContainer = document.querySelector('#bookmarks-markers-container');
     html = '';
-    for(var i = 0; i < bookmarks.length; i++) {
+    for (var i = 0; i < bookmarks.length; i++) {
         var bookmark = bookmarks[i];
         // Calculate screen position of bookmark time
         var x = bookmark.time / video.duration * 100;
@@ -268,15 +263,16 @@ function createBookmark() {
     var time = Math.floor(video.currentTime);
 
     // Don't create if there is already an existing bookmark at the same time
-    for(var i = 0; i < bookmarks.length; i++){
-        if(bookmarks[i].time == time){
+    for (var i = 0; i < bookmarks.length; i++) {
+        if (bookmarks[i].time == time) {
             return false;
         }
     }
 
     bookmarks.push({
         time: time,
-        label: 'Bookmark ' + (bookmarks.length + 1)});
+        label: 'Bookmark ' + (bookmarks.length + 1)
+    });
     saveBookmarks();
     updateBookmarkDisplays();
     return true;
@@ -285,10 +281,10 @@ function createBookmark() {
 function enableRenameBookmark(index, enable) {
     var inputField = document.querySelectorAll('.bookmark-item>td:nth-child(2)')[index];
     inputField.contentEditable = enable;
-    if(enable){
+    if (enable) {
         inputField.focus();
         // Select all in field
-        document.execCommand('selectAll',false,null);
+        document.execCommand('selectAll', false, null);
     }
 }
 
@@ -308,12 +304,12 @@ function clearBookmarks() {
 }
 
 function downloadVideo() {
-	//create virtual link for downloading and click it
-	var link = document.createElement('a');
-	var fileName = info.courseName + info.courseNumber + '-' + info.year + '-' + info.month + '-' + info.day;
-	link.download = fileName + '.' + suffixes[quality].split('.')[suffixes[quality].split('.').length - 1];
-	link.href = urlRoot + suffixes[quality];
-	link.click();
+    //create virtual link for downloading and click it
+    var link = document.createElement('a');
+    var fileName = info.courseName + info.courseNumber + '-' + info.year + '-' + info.month + '-' + info.day;
+    link.download = fileName + '.' + suffixes[quality].split('.')[suffixes[quality].split('.').length - 1];
+    link.href = urlRoot + suffixes[quality];
+    link.click();
 }
 
 function setVolume(vol) {
@@ -481,9 +477,13 @@ function parseUrl(url) {
     url = url.split('/');
 
     try {
+        info.semesterCode = url[1];
+        info.courseCode = url[2];
         info.courseName = url[2].match(/[A-Z]+/)[0];
         info.courseNumber = url[2].match(/[0-9]+G?/)[0];
     } catch (e) {
+        info.semesterCode = '';
+        info.courseCode = '';
         info.courseName = url[2] || '';
         info.courseNumber = '';
     }
@@ -572,15 +572,15 @@ lastInputVolume = setVolume(localStorage.getItem('canvasVideoEnhancerVolume') ||
 currentHovers.push('paused');
 
 // Enter key quits the renaming bookmark mode
-document.addEventListener('keydown', function(e) {
-    if(document.activeElement.parentElement.classList.contains('bookmark-item') && e.keyCode == 13) {
+document.addEventListener('keydown', function (e) {
+    if (document.activeElement.parentElement.classList.contains('bookmark-item') && e.keyCode == 13) {
         document.activeElement.blur();
     }
 });
 
 //Video Hotkeys
 document.addEventListener('keydown', function (e) {
-    if(document.activeElement.contentEditable === 'true' || document.activeElement == 'INPUT') {
+    if (document.activeElement.contentEditable === 'true' || document.activeElement == 'INPUT') {
         return;
     }
     switch (e.keyCode) {
@@ -636,7 +636,7 @@ document.addEventListener('keydown', function (e) {
             break;
         // B creates a bookmark at the current location
         case 66:
-            if(createBookmark()) {
+            if (createBookmark()) {
                 showHotkeyPopup('bookmark');
             }
             break;
@@ -656,8 +656,9 @@ function logVideoUrl() {
 }
 
 logVideoUrl();
-loadBookmarks();
 
-video.addEventListener('loadedmetadata', function(){
+video.addEventListener('loadedmetadata', function () {
+    console.log('hi');
+    loadBookmarks();
     updateBookmarkDisplays();
 });

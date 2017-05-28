@@ -22,7 +22,7 @@
                 <tbody id="top-level">
                 <tr onclick="toggleThumbnails()" class="clickable">
                     <td colspan="2">
-                        Thumbnails <sup>BETA</sup>
+                        Thumbnails <sup class="beta-tag">BETA</sup>
                         <div id="thumbnails-slider-bg">
                             <div id="thumbnails-slider-knob"></div>
                         </div>
@@ -253,21 +253,50 @@
 </td>
 <td>
 <div id="sidebar-container">
-    <div id="bookmarks-heading">
-        <table>
-            <tr>
-                <td>
-                    <div id="bookmarks-title">Bookmarks</div>
-                    <div id="bookmarks-subtitle">Click <i class="fa fa-bookmark"></i> or press <span style="border: 1px solid grey; border-radius: 2px; padding: 1px 2px;">B</span> to create a Bookmark</div>
-                </td>
-                <!-- <td id="playlist-progress">
-                    <span id="current-video"></span>/<span id="total-videos"></span>
-                </td> -->
-            </tr>
-        </table>
+    <div id="tab-group">
+        <div id="bookmarks-tab-header" class="tab selected" onclick="selectTab('bookmarks')">Bookmarks
+        </div><div id="playlist-tab-header" class="tab" onclick="selectTab('playlist')">Playlist <sup class="beta-tag">BETA</sup>
+        </div>
     </div>
-    <div id="bookmarks-table-container">
-        <table id="bookmarks-table" cellspacing="0" cellpadding="0"></table>
+    <div id="bookmarks-container" class="tab-content-container">
+        <div id="bookmarks-heading">
+            <table>
+                <tr>
+                    <td>
+                        <div id="bookmarks-subtitle">Click <i class="fa fa-bookmark"></i> or press <span style="border: 1px solid grey; border-radius: 2px; padding: 1px 2px;">B</span> to create a Bookmark</div>
+                    </td>
+                    <!-- <td id="playlist-progress">
+                        <span id="current-video"></span>/<span id="total-videos"></span>
+                    </td> -->
+                </tr>
+            </table>
+        </div>
+        <div id="bookmarks-table-container">
+            <table id="bookmarks-table" cellspacing="0" cellpadding="0"></table>
+        </div>
+    </div>
+    <div id="playlist-container" class="tab-content-container">
+        <div id="playlist-heading">
+            <table>
+                <tr>
+                    <td>
+                        <div id="course-name"></div>
+                        <div id="semester"></div>
+                    </td>
+                    <td id="playlist-progress">
+                        <span id="current-video"></span>/<span id="total-videos"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="playlist-list">
+
+        </div>
+        <div id="playlist-disclaimer">
+            <div>
+                This feature is in <b>BETA</b>. Correctness and completeness of listing is <b>not guaranteed</b>. Please report any issues <a href="https://github.com/ChineseElectricPanda/canvas-video-enhancer/issues">here</a>.
+            </div>
+        </div>
     </div>
 </div>
 </td>

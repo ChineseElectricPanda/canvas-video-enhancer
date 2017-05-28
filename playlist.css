@@ -62,6 +62,7 @@ body {
 #bookmarks-heading td{
     color: white;
     padding: 10px;
+    padding-top:5px;
 }
 
 #playlist-progress{
@@ -80,6 +81,13 @@ body {
     color:#b8b8b8;
     font-size:12px;
 
+}
+
+#bookmarks-container,
+#playlist-container{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 #playlist-list,
@@ -136,4 +144,41 @@ body {
 .bookmark-item>:nth-last-child(2),
 .bookmark-item>:last-child {
     width: 1%;
+}
+
+#tab-group{
+    background-color:#1a1a1a;
+    color:#b8b8b8;
+    white-space:nowrap;
+    padding-top:10px;
+}
+
+#tab-group .tab{
+    display:inline-block;
+    width:50%;
+    margin:0;
+    padding:0;
+    text-align:center;
+    padding-bottom:5px;
+    border-bottom: 2px solid #222;
+    cursor:pointer;
+    user-select:none;
+}
+
+#tab-group .tab.selected{
+    color:white;
+    border-bottom: 2px solid #004D82;
+}
+
+#playlist-disclaimer{
+    color: white;
+    padding: 5px;
+    font-size: 10px;
+    background-color:#1a1a1a;
+}
+
+#playlist-disclaimer a{
+    color:white;
+    text-decoration:none;
+    border-bottom: 1px dotted white;
 }

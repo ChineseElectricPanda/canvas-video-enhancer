@@ -293,7 +293,7 @@ div, td, table {
     width: 99%;
 }
 
-#options-menu sup {
+sup.beta-tag {
     color: #0081cd;
     font-size: 10px;
 }
