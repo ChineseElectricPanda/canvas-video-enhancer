@@ -93,6 +93,7 @@ body {
 #playlist-list,
 #bookmarks-table-container {
     flex-grow: 1;
+    height: 0;
     background-color: #222;
     overflow:auto;
     border: none;
