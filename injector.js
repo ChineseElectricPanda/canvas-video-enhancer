@@ -25,7 +25,15 @@ document.addEventListener('DOMContentLoaded', function () {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open('GET', chrome.extension.getURL('video.html'), false);
     xmlHttp.send(null);
-    document.body.innerHTML = xmlHttp.responseText + document.body.innerHTML;
+
+    // Parse the HTML
+    var domElements = parseHTML(xmlHttp.responseText);
+
+    // Insert everything before the existing elements
+    var firstBodyElement = document.body.firstChild;
+    domElements.forEach(function(el) {
+        document.body.insertBefore(el, firstBodyElement);
+    });
 
     //Inject font awesome font face
     var s = document.createElement('style');
@@ -53,3 +61,6 @@ document.addEventListener('DOMContentLoaded', function () {
     (document.head || document.body).appendChild(s);
 });
 
+function parseHTML(htmlString) {
+    return new DOMParser().parseFromString(htmlString, 'text/html').querySelectorAll('body > *');
+}
